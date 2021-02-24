@@ -1,20 +1,20 @@
 HEADER_DIR   := include
 SOURCE_DIR   := src
 OBJECT_DIR   := obj
-BEETROOT_DIR := ../beetroot
 
 SOURCES      := $(shell find $(SOURCE_DIR) -name "*.cxx")
 OBJECTS      := $(patsubst $(SOURCE_DIR)/%.cxx, $(OBJECT_DIR)/%.o, $(SOURCES))
 
 CXX      := g++
-CXXFLAGS := -O2 -Wall -Wextra -Wabi -Weffc++ -Wno-reorder
+CXXFLAGS := -g -Wall -Wextra -Wabi -Weffc++ -Wno-reorder
 CXXFLAGS += -I$(HEADER_DIR)
-CXXFLAGS += -I$(BEETROOT_DIR)
-CXXFLAGS += $(shell root-config --cflags)
+#CXXFLAGS += $(shell root-config --cflags)
+#CXXFLAGS += $(shell yoda-config --cflags)
 
-LIBS := 
+LIBS := -lbeetroot
 LIBS += $(shell root-config --libs)
-LIBS += -L$(BEETROOT_DIR)/.libs -lbeetroot
+LIBS += $(shell yoda-config --libs)
+LIBS += -lmgl
 
 $(OBJECT_DIR)/%.o: $(SOURCE_DIR)/%.cxx
 	@mkdir -p $(OBJECT_DIR)
